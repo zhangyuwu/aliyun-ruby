@@ -13,6 +13,9 @@ require 'cgi'
 require 'logger'
 require 'net/http'
 
+# ============================================================================
+# class AliyunError
+# ============================================================================
 class AliyunError < Exception
     attr_reader :detail
     
@@ -22,6 +25,9 @@ class AliyunError < Exception
     end
 end
 
+# ============================================================================
+# class AliyunService
+# ============================================================================
 class AliyunService
     attr_reader :api_url
     attr_reader :access_key_id
