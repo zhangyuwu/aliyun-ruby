@@ -10,7 +10,6 @@ require 'json'
 require 'base64'
 require 'openssl'
 require 'cgi'
-require 'logger'
 require 'net/http'
 
 # ============================================================================
@@ -37,7 +36,6 @@ class AliyunService
     def initialize(access_key_id, access_secret)
         @access_key_id = access_key_id
         @access_secret = access_secret
-        @logger = Logger.new(STDERR)
     end
     
     # --------------------------------------------------
@@ -68,8 +66,6 @@ class AliyunService
             return JSON.parse(res.body)
         else
             errmsg = "Failed to request with URL: #{uri}"
-            @logger.error errmsg
-            @logger.debug res.body
             raise AliyunError.new(errmsg, res.body)
         end
     end
