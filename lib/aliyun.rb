@@ -22,10 +22,6 @@ class AliyunError < Exception
         super(msg)
         @detail = detail
     end
-
-    def to_s
-        [self.message, detail].compact.join("\n")
-    end
 end
 
 # ============================================================================
