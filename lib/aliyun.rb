@@ -22,6 +22,10 @@ class AliyunError < Exception
         super(msg)
         @detail = detail
     end
+
+    def to_s
+        [self.message, detail].compact.join("\n")
+    end
 end
 
 # ============================================================================
@@ -58,15 +62,12 @@ class AliyunService
     # Funciton: http_get
     # --------------------------------------------------
     def http_get(uri)
-        req = Net::HTTP::Get.new(uri)
-        res = Net::HTTP.start(uri.hostname, uri.port) { |http|
-            http.request(req)
-        }        
+        res = Net::HTTP.get_response(uri)
         if res.is_a?(Net::HTTPOK)
             return JSON.parse(res.body)
         else
             errmsg = "Failed to request with URL: #{uri}"
-            raise AliyunError.new(errmsg, res.body)
+            raise AliyunError.new(errmsg, res)
         end
     end
 
