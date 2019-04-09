@@ -11,13 +11,16 @@ require 'aliyun'
 # class AliDomainService
 # ============================================================================
 class AliDomainService < AliyunService
+    attr_reader :account_name
+    
     # --------------------------------------------------
     # Funciton: initialize
     # --------------------------------------------------
-    def initialize(access_key_id, access_secret)
+    def initialize(access_key_id, access_secret, account_name = nil)
         super(access_key_id, access_secret)
         @api_url = 'http://domain.aliyuncs.com'
         @version = '2018-01-29'
+        @account_name = account_name
     end
     
     # --------------------------------------------------
