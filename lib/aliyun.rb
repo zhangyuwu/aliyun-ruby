@@ -33,9 +33,10 @@ class AliyunService
     attr_reader :access_secret
     attr_reader :version
     
-    def initialize(access_key_id, access_secret)
+    def initialize(access_key_id, access_secret, timeout = 500)
         @access_key_id = access_key_id
         @access_secret = access_secret
+        @timeout = timeout
     end
     
     # --------------------------------------------------
@@ -58,7 +59,10 @@ class AliyunService
     # Funciton: http_get
     # --------------------------------------------------
     def http_get(uri)
-        res = Net::HTTP.get_response(uri)
+        req = Net::HTTP::Get.new(uri)
+        res = Net::HTTP.start(uri.hostname, uri.port, :read_timeout => @timeout) { |http| 
+            http.request(req)
+        }
         if res.is_a?(Net::HTTPOK)
             return JSON.parse(res.body)
         else
